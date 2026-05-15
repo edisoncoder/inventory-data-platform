@@ -2,29 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
----
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v0.1.0] - 2026-03-XX
+## [v0.2.0] - 2026-05-15
 
 ### Added
-
-* CSV data ingestion pipeline
-* PostgreSQL storage integration
-* Layered architecture (raw, staging, analytics)
-* Data quality checks (raw, staging, analytics)
-* Idempotent load strategy (snapshot-based)
-* Structured logging system (daily logs)
-* Alert system for pipeline failures
-* Prefect orchestration (flows and tasks)
-* Retry mechanism for task resilience
+- Prefect orchestration
+- ACID transactions
+- DI pattern
+- Structured logging
 
 ### Changed
-
-* Refactored pipeline execution into modular steps
-* Improved separation of concerns across layers
+- Execution model (cron → Prefect)
 
 ### Fixed
+- SQL syntax errors
+- Import issues
 
-* Logging formatting issues (multi-line fix)
-* SQL view creation conflicts (table vs view naming)
-* Data quality validation flow (layer separation)
+## [v0.1.0] - 2026-03-15
+
+### Added
+- Data ingestion pipeline
+- Layered architecture
+- Integrity checks
+- Idempotency mechanisms
+- And other original features
+
+### Changed
+- Initial implementation adjustments
+
+### Fixed
+- Original bugs and issues
