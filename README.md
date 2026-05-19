@@ -1,4 +1,4 @@
-# ETL Pipeline v0.3.0
+# Inventory Data Platform v0.3.0
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![Prefect](https://img.shields.io/badge/Prefect-2.x-orange?logo=prefect&logoColor=white)](https://www.prefect.io/)
@@ -66,7 +66,7 @@ PostgreSQL (Raw + Analytics Layers)
 ### 1. Clone Repository
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/edisoncoder/inventory-data-platform.git
 cd inventory-data-platform
 ```
 
@@ -97,9 +97,9 @@ Key environment variables:
 # Database
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=supply_chain_db
-DB_USER=postgres
-DB_PASSWORD=postgres
+DB_NAME=inventory_db
+DB_USER=inventory_user
+DB_PASSWORD=inventory_pass
 
 # v0.3.0: Incremental Load (optional, default: false)
 WATERMARK_ENABLED=true
@@ -120,8 +120,9 @@ ANALYTICS_TABLE=supply_chain_summary
 docker-compose up -d postgres
 
 # Run migrations
-psql -U postgres -d supply_chain_db < sql/001_init.sql
-psql -U postgres -d supply_chain_db < sql/006_watermark_tracking.sql  # v0.3.0
+psql -U inventory_user -d inventory_db < sql/001_init.sql
+# ... 
+psql -U inventory_user -d inventory_db < sql/006_watermark_tracking.sql  # v0.3.0
 ```
 
 ### 6. Start Prefect Server (Optional)
@@ -282,11 +283,11 @@ inventory-data-platform/
 |---------|--------|--------|--------|
 | CSV Ingestion | ✅ | ✅ | ✅ |
 | PostgreSQL | ✅ | ✅ | ✅ |
+| Quality Gates | ✅ | ✅ | ✅ (Enhanced) |
 | Prefect Orchestration | ❌ | ✅ | ✅ |
 | ACID Compliance | ❌ | ✅ | ✅ |
 | Incremental Load | ❌ | ❌ | ✅ |
 | Watermark Checkpoint | ❌ | ❌ | ✅ |
-| Quality Gates | ✅ | ✅ | ✅ (Enhanced) |
 | Unit Tests | ❌ | ❌ | ✅ (13 tests) |
 
 ## Roadmap
@@ -326,10 +327,10 @@ inventory-data-platform/
 wc -l data/supply_chain_data.csv
 
 # Check watermark table exists
-psql -U postgres -d supply_chain_db -c "SELECT * FROM control.watermarks;"
+psql -U inventory_user -d inventory_db -c "SELECT * FROM control.watermarks;"
 
 # Re-run initialization
-psql -U postgres -d supply_chain_db < sql/006_watermark_tracking.sql
+psql -U inventory_user -d inventory_db < sql/006_watermark_tracking.sql
 ```
 
 ### Error: "WATERMARK_ENABLED=true requires CONTROL_SCHEMA to be defined"
